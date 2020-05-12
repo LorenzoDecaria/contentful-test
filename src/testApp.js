@@ -23,7 +23,3 @@ const getHero = async () => {
 }
 
 getHero()
-
-module.exports = {
-    getHero
-}

@@ -6,17 +6,11 @@ var client = contentful.createClient({
 })
 
 const getHero = async () => {
-
-    // client.getEntries()
-    // .then((response) => console.log(response))
-    // .catch(console.error)
-
-
     try {
-        // let hero = await client.getContentType("hero")
-        const hero = await client.getEntries()
-        console.log("Data: " + hero)
-        // return hero
+        const hero = await client.getEntry({
+            content_type: "hero"
+        })
+        return hero.fields
     } catch (error) {
         console.log(error)
     }
