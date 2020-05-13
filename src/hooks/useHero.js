@@ -1,12 +1,21 @@
+import { useEffect, useState } from 'react'
 import { getHero } from '../contentful/Client'
 
-const useHero = async () => {
-    try {
-        const heroData = await getHero()
-        return heroData
-    } catch (error) {
-        console.log(error)
-    }
-}
+export const useHero = function () {
+    const [hero, setHero] = useState(null);
+    const [loading, setLoading] = useState(false);
+  
+    useEffect(() => {
+      setLoading(true);
 
-export { useHero as default }
+      async function loadHero() {
+        const heroData = await getHero();
+        setHero(heroData);
+        setLoading(false);
+      }
+      
+      loadHero();
+    }, []);
+  
+    return { hero, loading };
+  };

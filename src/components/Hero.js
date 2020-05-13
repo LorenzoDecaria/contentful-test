@@ -1,32 +1,32 @@
-import React, { useEffect, useState } from 'react'
-import useHero from '../hooks/useHero'
-
-
-const promise = useHero()
+import React, { useEffect } from "react";
+import { useHero } from '../hooks/useHero'
 
 
 const Hero = () => {
-    const [hero, setHero] = useState()
+  const { hero, loading } = useHero();
 
-    useEffect( () => {
-        promise
-        .then( hero => setHero(hero) )
-        .catch()
-    }, [])
+  useEffect(() => {
+    if (hero) {
+      console.log(hero);
+    }
+  }, [hero, loading]);
 
-    return (
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  return (
+    <div>
+      {hero && (
         <div>
-            {hero &&
-                <div>
-                    <h6>{hero.greeting}</h6>
-                    <h1>{hero.title}</h1>
-                    <h3>{hero.subtitle}</h3>
-                    <p>{hero.description}</p>
-                    <button type="button">{hero.callToActionText}</button>
-                </div>
-            }
+          <h6>{hero.greeting}</h6>
+          <h1>{hero.title}</h1>
+          <h3>{hero.subtitle}</h3>
+          <p>{hero.description}</p>
+          <button type="button">{hero.callToActionText}</button>
         </div>
-    )
-}
-
-export default Hero
+      )}
+    </div>
+  );
+};
+export default Hero;
